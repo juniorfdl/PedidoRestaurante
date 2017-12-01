@@ -1,0 +1,132 @@
+﻿<!--<luar-crud crud="ctrl" title="Atendimento Mesa">-->
+
+<nav class="col-12 navbar navbar-toggler-right fixed-top navbar-default bg-inverse">
+    <button class="btn btn-light" ui-sref="home" ng-click="ctrl.Cancelar()">
+        Cancelar
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <button ng-show="ctrl.Pedido.Produtos.length > 0" class="btn btn-light" ng-click="ctrl.Resumo()">
+        Resumo
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <button class="btn btn-light" ng-show="ctrl.Pedido.Produtos.length > 0">
+        Confirmar
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="btn btn-light" ng-show="ctrl.Mesa">MESA Nº {{ctrl.Mesa}} </div>
+</nav>
+
+
+<nav ng-show="ctrl.VerResumo" class="col-6 navbar navbar-toggler-right fixed-top navbar-default bg-inverse">
+    <form class="form-control">
+        <div class="row col-sm-12">
+            <div class="col-sm-4">
+                <a class="btn btn-danger btn-sm" role="button" ng-click="ctrl.FecharResumo()">X</a>
+            </div>
+            <div class="col-sm-8">
+                <h3>Pedido Mesa Nº {{ctrl.Mesa}}</h3>
+            </div>
+        </div>
+        <div class="col-12 col-md-12">
+            <div class="col-12 panel panel-default">
+                <!--<div class="panel-heading text-center"><h3>Dashboard</h3> </div>-->
+                <table class="table table-condensed">
+                    <thead>
+                        <tr style="background-color:aqua">
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Operações</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.Produtos|filter:ctrl.myFilter  track by item.id">
+                            <td>{{ item.PRODA60DESCR }}</td>
+                            <td>{{ item.QTD }}</td>
+                            <td><a class="btn btn-primary " role="button" ng-click="ctrl.AddProduto(item)">+</a></td>
+                            <td><a class="btn btn-danger " role="button" ng-click="ctrl.DelProduto(item)">-</a></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <!--<div class="row">
+                <div class="col-12" ng-repeat="produto in ctrl.Produtos">
+                    <div class="col-6" ng-show="produto.QTD > 0">
+                        <h5>
+                            {{produto.PRODA60DESCR}}
+                        </h5>
+                            <a class="btn btn-primary btn-sm" role="button" ng-click="ctrl.AddProduto(produto)">+</a>
+                            <a ng-show="produto.QTD > 0" class="btn btn-danger btn-sm" role="button" ng-click="ctrl.DelProduto(produto)">-</a>
+                            <a ng-show="produto.QTD > 0" class="btn btn-info btn-sm" role="button">{{produto.QTD}} </a>
+                    </div>
+
+                    </div>
+            </div>-->
+        </div>
+    </form>
+</nav>
+
+<div class="container" ng-show="!ctrl.VisualizarProdutos">
+    <div class="col-12 col-md-9">
+
+        <div class="row">
+            <div class="col-2 col-lg-2">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(1)">Mesa 01</button>
+            </div><!--/span-->
+            <br />
+            <div class="col-2 col-lg-2">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(2)">Mesa 02</button>
+            </div><!--/span-->
+            <br />
+            <div class="col-2 col-lg-2">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(3)">Mesa 03</button>
+            </div><!--/span-->
+            <br />
+            <div class="col-2 col-lg-2">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(4)">Mesa 04</button>
+            </div><!--/span-->
+            <br />
+            <div class="col-2 col-lg-2">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(5)">Mesa 05</button>
+            </div><!--/span-->
+
+        </div><!--/row-->
+    </div><!--/span-->
+</div>
+
+<div class="container" ng-show="ctrl.VisualizarProdutos">
+
+    <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Grupos</a>
+                <a class="list-group-item list-group-item-info"
+                   ng-repeat="grupo in $root.currentUser.Grupos" ng-click="ctrl.SetGrupo(grupo)">{{grupo.GRUPA60DESCR}}</a>
+            </div>
+        </div>
+
+        <h4 ng-show="ctrl.Produtos.length == 0">Nenhum produto em: {{ctrl.GrupoSelecionado}}</h4>
+        <div class="col-12 col-md-9">
+            <div class="row">
+                <div class="col-6 col-lg-4" ng-repeat="produto in ctrl.Produtos">
+                    <h2>{{produto.PRODA60DESCR}}</h2>
+                    <p>
+                        <a class="btn btn-primary" role="button" ng-click="ctrl.AddProduto(produto)">+</a>
+                        <a ng-show="produto.QTD > 0" class="btn btn-danger" role="button" ng-click="ctrl.DelProduto(produto)">-</a>
+                        <a ng-show="produto.QTD > 0" class="btn btn-info" role="button">{{produto.QTD}} </a>
+                    </p>
+                </div>
+            </div><!--/row-->
+        </div><!--/span-->
+
+
+    </div><!--/row-->
+
+
+</div><!--/.container-->
