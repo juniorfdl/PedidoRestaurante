@@ -40,6 +40,7 @@
             }
 
             item.Grupos = db.Set<GRUPO>();
+            item.CONFIG_RESTAURANTE = db.Set<CONFIG_RESTAURANTE>();
 
             foreach (GRUPO g in item.Grupos) {                
                 g.Produtos = db.Set<PRODUTO>().Where(q => q.GRUPICOD == g.id);

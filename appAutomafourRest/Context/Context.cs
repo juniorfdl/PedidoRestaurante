@@ -47,6 +47,7 @@ namespace Infra.Base
         public virtual DbSet<CAD_EMPRESA> CAD_EMPRESA { get; set; }
         public virtual DbSet<GRUPO> GRUPO { get; set; }
         public virtual DbSet<PRODUTO> PRODUTO { get; set; }
+        public virtual DbSet<CONFIG_RESTAURANTE> CONFIG_RESTAURANTE { get; set; }
         #endregion
 
     }

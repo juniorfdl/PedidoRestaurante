@@ -16,7 +16,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="btn btn-light" ng-show="ctrl.Mesa">MESA Nº {{ctrl.Mesa}} </div>
+    <div class="btn btn-light btn-outline-danger" ng-show="ctrl.Mesa">MESA Nº {{ctrl.Mesa}} R$ {{ctrl.Total| currency:'':2}} </div>
 </nav>
 
 
@@ -32,20 +32,21 @@
         </div>
         <div class="col-12 col-md-12">
             <div class="col-12 panel panel-default">
-                <!--<div class="panel-heading text-center"><h3>Dashboard</h3> </div>-->
                 <table class="table table-condensed">
                     <thead>
                         <tr style="background-color:aqua">
                             <th>Produto</th>
                             <th>Quantidade</th>
+                            <th>Preço</th>
                             <th>Operações</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in ctrl.Produtos|filter:ctrl.myFilter  track by item.id">
+                        <tr ng-repeat="item in ctrl.Pedido.Produtos|filter:ctrl.myFilter  track by item.id">
                             <td>{{ item.PRODA60DESCR }}</td>
                             <td>{{ item.QTD }}</td>
+                            <td align="right">{{item.PRODN3VLRVENDA| currency:'':2}}</td>
                             <td><a class="btn btn-primary " role="button" ng-click="ctrl.AddProduto(item)">+</a></td>
                             <td><a class="btn btn-danger " role="button" ng-click="ctrl.DelProduto(item)">-</a></td>
                         </tr>
@@ -53,21 +54,10 @@
 
                 </table>
             </div>
-
-            <!--<div class="row">
-                <div class="col-12" ng-repeat="produto in ctrl.Produtos">
-                    <div class="col-6" ng-show="produto.QTD > 0">
-                        <h5>
-                            {{produto.PRODA60DESCR}}
-                        </h5>
-                            <a class="btn btn-primary btn-sm" role="button" ng-click="ctrl.AddProduto(produto)">+</a>
-                            <a ng-show="produto.QTD > 0" class="btn btn-danger btn-sm" role="button" ng-click="ctrl.DelProduto(produto)">-</a>
-                            <a ng-show="produto.QTD > 0" class="btn btn-info btn-sm" role="button">{{produto.QTD}} </a>
-                    </div>
-
-                    </div>
-            </div>-->
         </div>
+        <footer>
+            <h3>Total R$ {{ctrl.Total| currency:'':2}}</h3>
+        </footer>
     </form>
 </nav>
 
@@ -75,26 +65,9 @@
     <div class="col-12 col-md-9">
 
         <div class="row">
-            <div class="col-2 col-lg-2">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(1)">Mesa 01</button>
+            <div class="col-2 col-lg-2" ng-repeat="mesa in $root.currentUser.CONFIG_RESTAURANTE">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(mesa.MESA)">{{mesa.OBS}}</button>
             </div><!--/span-->
-            <br />
-            <div class="col-2 col-lg-2">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(2)">Mesa 02</button>
-            </div><!--/span-->
-            <br />
-            <div class="col-2 col-lg-2">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(3)">Mesa 03</button>
-            </div><!--/span-->
-            <br />
-            <div class="col-2 col-lg-2">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(4)">Mesa 04</button>
-            </div><!--/span-->
-            <br />
-            <div class="col-2 col-lg-2">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="ctrl.SetMesa(5)">Mesa 05</button>
-            </div><!--/span-->
-
         </div><!--/row-->
     </div><!--/span-->
 </div>
@@ -116,6 +89,7 @@
             <div class="row">
                 <div class="col-6 col-lg-4" ng-repeat="produto in ctrl.Produtos">
                     <h2>{{produto.PRODA60DESCR}}</h2>
+                    <h2>R$: {{produto.PRODN3VLRVENDA | currency:'':2}}</h2>
                     <p>
                         <a class="btn btn-primary" role="button" ng-click="ctrl.AddProduto(produto)">+</a>
                         <a ng-show="produto.QTD > 0" class="btn btn-danger" role="button" ng-click="ctrl.DelProduto(produto)">-</a>

@@ -27,7 +27,9 @@
         [NotMapped]
         public virtual dynamic Empresas { get; set; }
         [NotMapped]
-        public virtual dynamic Grupos { get; set; }        
+        public virtual dynamic Grupos { get; set; }
+        [NotMapped]
+        public virtual dynamic CONFIG_RESTAURANTE { get; set; }
         [NotMapped]
         public string CEMP { get; set; }
     }

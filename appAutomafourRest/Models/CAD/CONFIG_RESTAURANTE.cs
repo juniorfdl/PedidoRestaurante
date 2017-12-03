@@ -9,18 +9,19 @@
     using System.Text;
     using System.Threading.Tasks;
     
-    [Table("PRODUTO")]
-    public class PRODUTO : IEntidadeBase
+    [Table("CONFIG_RESTAURANTE")]
+    public class CONFIG_RESTAURANTE : IEntidadeBase
     {
         [Key]
-        [Column("PRODICOD")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Column("ID")]
         public int id { get; set; }
         [Required]
-        public string PRODA60DESCR { get; set; }  
-        public int? GRUPICOD { get; set; }
-        public double? PRODN3VLRVENDA { get; set; }
+        public int? MESA { get; set; }
+        public string OBS { get; set; }
         [NotMapped]
-        public string CEMP { get; set; }        
+        public string CEMP { get; set; }
+        [NotMapped]
+        public virtual dynamic Produtos { get; set; }
     }
 }

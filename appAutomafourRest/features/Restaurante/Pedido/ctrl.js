@@ -18,6 +18,7 @@ var App;
 
                 this.Pedido = {};
                 this.Pedido.Produtos = [];
+                this.Total = 0;
 
                 this.$rootScope = $rootScope;
 
@@ -25,6 +26,13 @@ var App;
                 this.crudSvc = CrudpedidoService;
                 this.lista = lista;
                 this.VisualizarProdutos = false;
+
+                this.GetTotal = function () {
+                    _this.Total = 0;
+                    for (var i = 0; i < _this.Pedido.Produtos.length; i++) {
+                        _this.Total = _this.Total + (_this.Pedido.Produtos[i].QTD * _this.Pedido.Produtos[i].PRODN3VLRVENDA);
+                    }
+                }
 
                 this.SetMesa = function (index) {                    
                     _this.VisualizarProdutos = true;
@@ -47,11 +55,13 @@ var App;
                     for (var i = 0; i < _this.Pedido.Produtos.length; i++) {
                         if (_this.Pedido.Produtos[i].id === Produto.id) {
                             _this.Pedido.Produtos[i] = Produto;
+                            _this.GetTotal();
                             return;
                         }
                     }
 
-                    this.Pedido.Produtos.push(Produto)
+                    _this.Pedido.Produtos.push(Produto)
+                    _this.GetTotal();
                 }
 
                 this.DelProduto = function (Produto) {
@@ -63,8 +73,9 @@ var App;
 
                             if (_this.Pedido.Produtos[i].QTD == 0)
                                 _this.Pedido.Produtos.splice(i, 1);
-                            
-                            break;
+
+                            _this.GetTotal();
+                            return;
                         }
                     }
 
@@ -74,12 +85,16 @@ var App;
                     _this.Pedido = {};
                     _this.Pedido.Produtos = [];
 
+                    if (_this.Produtos)
                     for (var i = 0; i < _this.Produtos.length; i++) {                        
                         _this.Produtos[i].QTD = 0;                                                  
                     }
+
+                    _this.Total = 0;
                 }
 
                 this.Resumo = function () {
+                    _this.GetTotal();
                     _this.VerResumo = true;
                 }
 

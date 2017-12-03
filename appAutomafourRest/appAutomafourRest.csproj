@@ -226,6 +226,7 @@
     <Compile Include="Infra\Interface\ICrudBase.cs" />
     <Compile Include="Infra\Interface\IEntidadeDetalhe.cs" />
     <Compile Include="Infra\Interface\IEntidadeBase.cs" />
+    <Compile Include="Models\CAD\CONFIG_RESTAURANTE.cs" />
     <Compile Include="Models\CAD\PRODUTO.cs" />
     <Compile Include="Models\CAD\GRUPO.cs" />
     <Compile Include="Models\CAD\CAD_PESSOA.cs" />
@@ -358,6 +359,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\Automafour.pubxml" />
     <None Include="Properties\PublishProfiles\locatelli.pubxml" />
+    <None Include="Properties\PublishProfiles\Restaurante.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
