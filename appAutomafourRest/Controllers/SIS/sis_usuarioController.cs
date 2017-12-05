@@ -3,11 +3,13 @@
     using Infra.Base.Interface.Base;
     using Models.Cadastros;
     using Models.SIS;
+    using Newtonsoft.Json;
     using Sistema;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Entity;
+    using System.Dynamic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -16,6 +18,8 @@
 
     public class sis_usuarioController : CrudControllerBase<SIS_USUARIO>
     {
+        private dynamic retorno = new ExpandoObject();
+
         protected override IOrderedQueryable<SIS_USUARIO> Ordenar(IQueryable<SIS_USUARIO> query)
         {
             return query.OrderBy(e => e.id);
@@ -50,6 +54,19 @@
         }
 
 
+        [Route("api/sis_usuario/ConfirmarPedido")]
+        [HttpGet]
+        public IHttpActionResult ConfirmarPedido([FromUri] Pedido dados)
+        {
+            foreach (dynamic item in dados.Produtos)
+            {
+                PRODUTO i = JsonConvert.DeserializeObject<PRODUTO>(item);
+            }                        
+
+            retorno = dados;
+            return Ok(dados);
+        }
+
         [Route("api/sis_usuario/Empresa")]
         [HttpGet]
         public dynamic Empresa([FromUri]SIS_USUARIO usuario)
@@ -58,5 +75,11 @@
             return emp;
         }
         
+    }
+        
+    public class Pedido
+    {
+        public int id { get; set; }
+        public dynamic Produtos { get; set; }
     }
 }

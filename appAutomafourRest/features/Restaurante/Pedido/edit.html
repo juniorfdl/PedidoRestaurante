@@ -1,23 +1,24 @@
 ﻿<!--<luar-crud crud="ctrl" title="Atendimento Mesa">-->
 
 <nav class="col-12 navbar navbar-toggler-right fixed-top navbar-default bg-inverse">
-    <button class="btn btn-light" ui-sref="home" ng-click="ctrl.Cancelar()">
-        Cancelar
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="btn btn-light btn-outline-danger" ng-show="ctrl.Mesa">MESA Nº {{ctrl.Mesa}} R$ {{ctrl.Total| currency:'':2}} </div>
 
     <button ng-show="ctrl.Pedido.Produtos.length > 0" class="btn btn-light" ng-click="ctrl.Resumo()">
         Resumo
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <button class="btn btn-light" ng-show="ctrl.Pedido.Produtos.length > 0">
+    <button class="btn btn-light" ng-show="ctrl.Pedido.Produtos.length > 0" ng-click="ctrl.ConfirmarPedido()">
         Confirmar
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="btn btn-light btn-outline-danger" ng-show="ctrl.Mesa">MESA Nº {{ctrl.Mesa}} R$ {{ctrl.Total| currency:'':2}} </div>
-</nav>
+    <button class="btn btn-light" ui-sref="home" ng-click="ctrl.Cancelar()">
+        Cancelar
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+ </nav>
 
 
 <nav ng-show="ctrl.VerResumo" class="col-6 navbar navbar-toggler-right fixed-top navbar-default bg-inverse">

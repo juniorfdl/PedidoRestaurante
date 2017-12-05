@@ -16,8 +16,14 @@ var App;
 
             function CrudpedidoService($q, api, $rootScope) {
                 _super.apply(this, arguments);
+
+              this.ConfirmarPedido = function (dados) {
+                    return this.api.allLook(dados, 'sis_usuario/confirmarpedido');
+              };
+
             }
 
+            
             Object.defineProperty(CrudpedidoService.prototype, "baseEntity", {
                 /// @override
                 get: function () {

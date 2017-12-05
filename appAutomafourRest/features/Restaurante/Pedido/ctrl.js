@@ -17,6 +17,7 @@ var App;
                 _super.call(this);
 
                 this.Pedido = {};
+                this.Pedido.id = 1;
                 this.Pedido.Produtos = [];
                 this.Total = 0;
 
@@ -26,6 +27,13 @@ var App;
                 this.crudSvc = CrudpedidoService;
                 this.lista = lista;
                 this.VisualizarProdutos = false;
+
+                this.ConfirmarPedido = function () {
+                    _this.crudSvc.ConfirmarPedido(_this.Pedido).then(function (dados) {
+                        debugger;
+                        _this.Pedido = dados;
+                    });
+                }
 
                 this.GetTotal = function () {
                     _this.Total = 0;
