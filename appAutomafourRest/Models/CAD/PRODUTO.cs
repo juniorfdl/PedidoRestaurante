@@ -21,6 +21,8 @@
         public int? GRUPICOD { get; set; }
         public double? PRODN3VLRVENDA { get; set; }
         [NotMapped]
+        public int? QTD { get; set; }
+        [NotMapped]
         public string CEMP { get; set; }        
     }
 }

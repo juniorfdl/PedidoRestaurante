@@ -21,6 +21,12 @@ var App;
                     return this.api.allLook(dados, 'sis_usuario/confirmarpedido');
               };
 
+              this.PedidoMesa = function (mesa) {
+                  debugger;
+                  var params = { "id": mesa };
+                  return this.api.allLook(params,'sis_usuario/PedidoMesa');
+              };
+
             }
 
             

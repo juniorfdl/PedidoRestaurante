@@ -12,14 +12,21 @@ var App;
         var CrudpedidoCtrl = (function (_super) {
 
             __extends(CrudpedidoCtrl, _super);
-            function CrudpedidoCtrl($rootScope, api, CrudpedidoService, lista, $q, $scope) {
+            function CrudpedidoCtrl($rootScope, api, CrudpedidoService, lista, $q, $scope, SweetAlert) {
                 var _this = this;
                 _super.call(this);
 
-                this.Pedido = {};
-                this.Pedido.id = 1;
-                this.Pedido.Produtos = [];
-                this.Total = 0;
+                this.SweetAlert = SweetAlert;
+                this.IniciarPedido = function () {
+                    this.Pedido = {};
+                    this.Pedido.id = 0;
+                    this.Pedido.Produtos = [];
+                    this.Pedido.Mesa = 0;
+                    this.Pedido.Total = 0;
+                    this.Pedido.CodUsr = $rootScope.currentUser.CODIGOSISUSUARIO;
+                }
+
+                this.IniciarPedido();
 
                 this.$rootScope = $rootScope;
 
@@ -27,24 +34,74 @@ var App;
                 this.crudSvc = CrudpedidoService;
                 this.lista = lista;
                 this.VisualizarProdutos = false;
-
+                
                 this.ConfirmarPedido = function () {
                     _this.crudSvc.ConfirmarPedido(_this.Pedido).then(function (dados) {
                         debugger;
-                        _this.Pedido = dados;
+                        _this.Pedido.id = dados.id;
                     });
                 }
 
                 this.GetTotal = function () {
-                    _this.Total = 0;
+                    _this.Pedido.Total = 0;
                     for (var i = 0; i < _this.Pedido.Produtos.length; i++) {
-                        _this.Total = _this.Total + (_this.Pedido.Produtos[i].QTD * _this.Pedido.Produtos[i].PRODN3VLRVENDA);
+                        _this.Pedido.Total = _this.Pedido.Total + (_this.Pedido.Produtos[i].QTD * _this.Pedido.Produtos[i].PRODN3VLRVENDA);
                     }
                 }
 
-                this.SetMesa = function (index) {                    
-                    _this.VisualizarProdutos = true;
-                    _this.Mesa = index;
+                this.SetMesa = function (index) {
+
+                    _this.SweetAlert.swal({
+                        title: "Buscar Ultimo Pedido da Mesa?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Sim",
+                        cancelButtonText: "Nao"
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            _this.crudSvc.PedidoMesa(index).then(function (dados) {
+                                debugger;
+                                if (dados) {                           
+                                    _this.Pedido.id = dados.id;
+                                    _this.Pedido.CodUsr = dados.CodUsr;
+                                    _this.Pedido.Total = dados.Total;
+                                                                        
+                                    for (var i = 0; i < dados.Produtos.length; i++)
+                                    {
+                                        for (var iG = 0; iG < _this.$rootScope.currentUser.Grupos.length; iG++)
+                                        {
+                                            if (_this.$rootScope.currentUser.Grupos[iG].id == dados.Produtos[i].GRUPICOD) {
+                                                _this.SetGrupo(_this.$rootScope.currentUser.Grupos[iG]);
+
+                                                for (var iP = 0; iP < _this.Produtos.length; iP++)
+                                                {
+                                                    if (_this.Produtos[iP].id == dados.Produtos[i].PRODICOD) {
+                                                        _this.Produtos[iP].QTD = dados.Produtos[i].PVITN3QTD - 1;
+                                                        _this.AddProduto(_this.Produtos[iP]);
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        }
+
+                                        //var prod = {};
+                                        //prod.id = dados.Produtos[i].PRODICOD;
+                                        //prod.QTD = dados.Produtos[i].PVITN3QTD;
+                                        //prod.PRODN3VLRVENDA = dados.Produtos[i].PVITN3VLRUNIT;
+                                        //prod.PRODA60DESCR = dados.Produtos[i].PRODA60DESCR;
+                                        //prod.GRUPICOD = dados.Produtos[i].GRUPICOD;
+                                        //_this.AddProduto(prod);
+                                    }
+                                }
+                            });
+                        }
+
+                        _this.VisualizarProdutos = true;
+                        _this.Pedido.Mesa = index;
+                    });
+                                        
                 }
 
                 this.SetGrupo = function (grupo) {
@@ -90,15 +147,14 @@ var App;
                 }
 
                 this.Cancelar = function () {
-                    _this.Pedido = {};
-                    _this.Pedido.Produtos = [];
+                    this.IniciarPedido();
 
                     if (_this.Produtos)
                     for (var i = 0; i < _this.Produtos.length; i++) {                        
                         _this.Produtos[i].QTD = 0;                                                  
                     }
 
-                    _this.Total = 0;
+                    
                 }
 
                 this.Resumo = function () {
@@ -113,7 +169,6 @@ var App;
                 this.FecharResumo = function () {
                     _this.VerResumo = false;
                 }
-
             }
 
             CrudpedidoCtrl.prototype.crud = function () {

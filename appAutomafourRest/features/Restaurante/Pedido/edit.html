@@ -1,7 +1,11 @@
 ﻿<!--<luar-crud crud="ctrl" title="Atendimento Mesa">-->
 
 <nav class="col-12 navbar navbar-toggler-right fixed-top navbar-default bg-inverse">
-    <div class="btn btn-light btn-outline-danger" ng-show="ctrl.Mesa">MESA Nº {{ctrl.Mesa}} R$ {{ctrl.Total| currency:'':2}} </div>
+    <div class="btn btn-light btn-outline-danger" ng-show="ctrl.Pedido.Mesa">
+    Mesa: {{ctrl.Pedido.Mesa}} 
+    R$ {{ctrl.Pedido.Total| currency:'':2}}
+    Pedido: {{ctrl.Pedido.id}} 
+    </div>
 
     <button ng-show="ctrl.Pedido.Produtos.length > 0" class="btn btn-light" ng-click="ctrl.Resumo()">
         Resumo
@@ -20,7 +24,6 @@
 
  </nav>
 
-
 <nav ng-show="ctrl.VerResumo" class="col-6 navbar navbar-toggler-right fixed-top navbar-default bg-inverse">
     <form class="form-control">
         <div class="row col-sm-12">
@@ -28,7 +31,7 @@
                 <a class="btn btn-danger btn-sm" role="button" ng-click="ctrl.FecharResumo()">X</a>
             </div>
             <div class="col-sm-8">
-                <h3>Pedido Mesa Nº {{ctrl.Mesa}}</h3>
+                <h3>Pedido Mesa Nº {{ctrl.Pedido.Mesa}}</h3>
             </div>
         </div>
         <div class="col-12 col-md-12">
@@ -57,7 +60,7 @@
             </div>
         </div>
         <footer>
-            <h3>Total R$ {{ctrl.Total| currency:'':2}}</h3>
+            <h3>Total R$ {{ctrl.Pedido.Total| currency:'':2}}</h3>
         </footer>
     </form>
 </nav>

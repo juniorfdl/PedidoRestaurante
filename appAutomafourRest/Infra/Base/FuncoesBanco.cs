@@ -21,6 +21,11 @@
             
         }
 
+        public void ExecuteSqlCommand(string sql, int param)
+        {
+            db.Database.ExecuteSqlCommand(sql, param);
+        }
+
         public List<string> ExecSql(string sql)
         {            
             return db.Database.SqlQuery<string>(sql).ToList();            
