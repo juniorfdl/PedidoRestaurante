@@ -210,6 +210,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CAD\cad_pessoaController.cs" />
     <Compile Include="Controllers\CAD\cad_empresaController.cs" />
+    <Compile Include="Controllers\CAD\PedidoesController.cs" />
     <Compile Include="Controllers\SIS\sis_menuController.cs" />
     <Compile Include="Controllers\SIS\sis_usuarioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -297,6 +298,7 @@
     <Content Include="Scripts\Angular\angular-messages.js" />
     <Content Include="Scripts\Angular\angular-mocks.js" />
     <Content Include="Scripts\Angular\angular-responsive-tables.js" />
+    <Content Include="Scripts\Angular\angular-screenfull.js" />
     <Content Include="Scripts\Angular\angular-smart-forms.js" />
     <Content Include="Scripts\Angular\angular-ui-router.js" />
     <Content Include="Scripts\Angular\angular-wt-apps.js" />
@@ -307,6 +309,7 @@
     <Content Include="Scripts\Angular\knockout-sortable.js" />
     <Content Include="Scripts\Angular\ng-sortable.js" />
     <Content Include="Scripts\Angular\react-sortable-mixin.js" />
+    <Content Include="Scripts\Angular\screenfull.js" />
     <Content Include="Scripts\Angular\select.js" />
     <Content Include="Scripts\Angular\select.min.js" />
     <Content Include="Scripts\Angular\Sortable.js" />

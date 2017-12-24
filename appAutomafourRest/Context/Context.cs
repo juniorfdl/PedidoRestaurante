@@ -50,5 +50,6 @@ namespace Infra.Base
         public virtual DbSet<CONFIG_RESTAURANTE> CONFIG_RESTAURANTE { get; set; }
         #endregion
 
+        public System.Data.Entity.DbSet<Controllers.Sistema.Pedido> Pedidoes { get; set; }
     }
 }

@@ -17,8 +17,10 @@ var App;
             function CrudpedidoService($q, api, $rootScope) {
                 _super.apply(this, arguments);
 
-              this.ConfirmarPedido = function (dados) {
-                    return this.api.allLook(dados, 'sis_usuario/confirmarpedido');
+                this.ConfirmarPedido = function (dados) {
+                    debugger;
+                    return this.api.save(dados);
+                    //return this.api.allLook(dados, 'sis_usuario/confirmarpedido');
               };
 
               this.PedidoMesa = function (mesa) {
@@ -33,7 +35,7 @@ var App;
             Object.defineProperty(CrudpedidoService.prototype, "baseEntity", {
                 /// @override
                 get: function () {
-                    return 'pedido';
+                    return 'pedidoes';
                 },
                 enumerable: true,
                 configurable: true

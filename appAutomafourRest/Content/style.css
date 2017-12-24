@@ -1,20 +1,63 @@
 /* BASIC STYLINGS
 ============================================================================= */
+
+::-webkit-scrollbar {
+  width: 15px;
+  background: white;
+}
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 99px rgba(0,0,0,.2);
+  border: solid transparent;
+  border-width: 6px 4px;
+}
+
+/* A full-screen element that is not the root element should be stretched to cover the viewport. */
+:-webkit-full-screen:not(:root) {
+  width: 90% !important;
+  float: none !important;
+}
+:-webkit-full-screen video {
+  width: 100%;
+}
+:-webkit-full-screen .tohide {
+  display: none;
+}
+:-moz-full-screen:not(:root) {
+  width: 90% !important;
+  float: none !important;
+}
+:-moz-full-screen #fs-inner {
+  display: table-cell;
+  vertical-align: middle;
+}
+:-moz-full-screen #fs {
+  width: 90%;
+  margin: auto;
+}
+:-moz-full-screen video {
+  width: 100%;
+}
+:-moz-full-screen .tohide {
+  display: none;
+}
+
 thead, tbody{
   display: block;  
 }
 
-tbody{
+/*tbody{
   overflow-y: scroll;
   height: 100px;
   height: 400px;
   }
+    */
+    
 
 .table {
   border-collapse: collapse;
   /*background-color: #fff;*/
   width: 100%;
-  height: 400px;
+  height: 100%;
 }
 .table caption {
   background-color: aqua;

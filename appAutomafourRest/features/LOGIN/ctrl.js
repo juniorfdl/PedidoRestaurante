@@ -28,6 +28,7 @@ var App;
                             _this.loginOK();
                             $location.path('/home');    
                             toaster.clear();
+
                         }
                         else {
                             security.empresas($rootScope.currentUser.id).then(function (dados) {
@@ -59,6 +60,7 @@ var App;
                         } else { toaster.warning("Atenção", "Usuário não encontrado"); }
                     });
             };
+
         })
        .controller('Error404Ctrl', function ($location, $window) {
            $scope.$on('$viewContentLoaded', function () {

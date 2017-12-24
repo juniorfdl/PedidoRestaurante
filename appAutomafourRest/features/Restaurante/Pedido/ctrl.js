@@ -17,9 +17,10 @@ var App;
                 _super.call(this);
 
                 this.SweetAlert = SweetAlert;
+                                
                 this.IniciarPedido = function () {
                     this.Pedido = {};
-                    this.Pedido.id = 0;
+                    this.Pedido.id = -1;
                     this.Pedido.Produtos = [];
                     this.Pedido.Mesa = 0;
                     this.Pedido.Total = 0;
@@ -34,6 +35,7 @@ var App;
                 this.crudSvc = CrudpedidoService;
                 this.lista = lista;
                 this.VisualizarProdutos = false;
+                this.VisualizarGrupo = false;
                 
                 this.ConfirmarPedido = function () {
                     _this.crudSvc.ConfirmarPedido(_this.Pedido).then(function (dados) {
@@ -50,7 +52,7 @@ var App;
                 }
 
                 this.SetMesa = function (index) {
-
+                    
                     _this.SweetAlert.swal({
                         title: "Buscar Ultimo Pedido da Mesa?",
                         type: "warning",
@@ -59,14 +61,18 @@ var App;
                         confirmButtonText: "Sim",
                         cancelButtonText: "Nao"
                     }, function (isConfirm) {
+                        _this.VisualizarProdutos = false;
+                        _this.VisualizarGrupo = true;
+
                         if (isConfirm) {
                             _this.crudSvc.PedidoMesa(index).then(function (dados) {
-                                debugger;
+                                
                                 if (dados) {                           
                                     _this.Pedido.id = dados.id;
                                     _this.Pedido.CodUsr = dados.CodUsr;
                                     _this.Pedido.Total = dados.Total;
-                                                                        
+                                    _this.VerResumo = true;
+                                                                                                            
                                     for (var i = 0; i < dados.Produtos.length; i++)
                                     {
                                         for (var iG = 0; iG < _this.$rootScope.currentUser.Grupos.length; iG++)
@@ -86,19 +92,11 @@ var App;
                                             }
                                         }
 
-                                        //var prod = {};
-                                        //prod.id = dados.Produtos[i].PRODICOD;
-                                        //prod.QTD = dados.Produtos[i].PVITN3QTD;
-                                        //prod.PRODN3VLRVENDA = dados.Produtos[i].PVITN3VLRUNIT;
-                                        //prod.PRODA60DESCR = dados.Produtos[i].PRODA60DESCR;
-                                        //prod.GRUPICOD = dados.Produtos[i].GRUPICOD;
-                                        //_this.AddProduto(prod);
                                     }
                                 }
                             });
-                        }
-
-                        _this.VisualizarProdutos = true;
+                        }                        
+                                                
                         _this.Pedido.Mesa = index;
                     });
                                         
@@ -107,7 +105,10 @@ var App;
                 this.SetGrupo = function (grupo) {
                     debugger;
                     _this.GrupoSelecionado = grupo.GRUPA60DESCR;
-                    _this.Produtos = grupo.Produtos;                    
+                    _this.Produtos = grupo.Produtos;
+                    _this.VisualizarProdutos = true;
+                    _this.VisualizarGrupo = false;
+
                 }
 
                 this.AddProduto = function (Produto) {
@@ -159,20 +160,22 @@ var App;
 
                 this.Resumo = function () {
                     _this.GetTotal();
-                    _this.VerResumo = true;
+                    _this.VerResumo = !_this.VerResumo;
                 }
 
                 this.myFilter = function (item) {
                     return item.QTD > 0;
                 };
 
-                this.FecharResumo = function () {
-                    _this.VerResumo = false;
+                this.AbrirGrupo = function () {
+                    _this.VisualizarProdutos = false;
+                    _this.VisualizarGrupo = true;
                 }
+                                                
             }
 
             CrudpedidoCtrl.prototype.crud = function () {
-                return "pedido";
+                return "pedidoes";
             };
 
             return CrudpedidoCtrl;

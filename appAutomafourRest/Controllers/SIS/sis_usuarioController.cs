@@ -92,10 +92,9 @@
 
             return Ok(item);
         }
-
-
-        [Route("api/sis_usuario/ConfirmarPedido")]
-        [HttpGet]
+                
+        [Route("api/Pedido")]
+        [HttpPost]
         public IHttpActionResult ConfirmarPedido([FromUri] Pedido dados)
         {            
             FuncoesBanco f = new FuncoesBanco(dblocal);
@@ -134,9 +133,10 @@
             }
 
             retorno.id = dados.id;
-            return Ok(retorno);
+            return CreatedAtRoute("DefaultApi", new { id = retorno.id }, retorno);
+           // return Ok(retorno);
         }
-
+               
         [Route("api/sis_usuario/Empresa")]
         [HttpGet]
         public dynamic Empresa([FromUri]SIS_USUARIO usuario)
