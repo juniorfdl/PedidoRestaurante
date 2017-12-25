@@ -4,12 +4,11 @@
     <div class="btn btn-light btn-outline-danger" ng-show="ctrl.Pedido.Mesa">
         Mesa: {{ctrl.Pedido.Mesa}}
         R$ {{ctrl.Pedido.Total| currency:'':2}}
-        Pedido: {{ctrl.Pedido.id}}
+        <div ng-show="ctrl.Pedido.id > 0">Pedido: {{ctrl.Pedido.id}}</div>        
     </div>
 
     <button ng-show="ctrl.Pedido.Produtos.length > 0" class="btn btn-light"
             ng-click="ctrl.Resumo()">
-
         Resumo
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,18 +22,15 @@
         Cancelar
         <span class="navbar-toggler-icon"></span>
     </button>
-
 </nav>
 
+<br />
 <!--resumo-->
-
 <div class="container" ng-show="ctrl.VerResumo">
-
-
     <div class="col-12 col-md-12">
 
         <div class="row col-md-12">
-            <luar_Textarea ng-model="ctrl.Pedido.OBS" maxlength="500" label="Observação"
+            <luar_Textarea ng-model="ctrl.Pedido.OBS" maxlength="60" label="Observação"
                            style="width: 600px">
             </luar_Textarea>
         </div>
@@ -65,24 +61,38 @@
 
 <!--mesa-->
 <div class="container" ng-show="!ctrl.VisualizarProdutos && !ctrl.VisualizarGrupo">
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
+        <input id="pesquisarMesa" type="text" class="form-control" name="pesquisarMesa"
+               ng-model="ctrl.Pedido.FiltroMesa" placeholder="Pesquisar">
+    </div>
+    <div class="col-12 col-md-12">
         <div class="row">
-            <div class="col-3 col-lg-3 blockquote" ng-repeat="mesa in $root.currentUser.CONFIG_RESTAURANTE">
+            <div class="col-3 col-lg-3 blockquote"
+                 ng-repeat="mesa in $root.currentUser.CONFIG_RESTAURANTE | orderBy:'OBS' |filter:ctrl.Pedido.FiltroMesa ">
                 <br />
-                <button type="button" class="btn btn-primary btn-lg badge-pill active" style="height:100px" ng-click="ctrl.SetMesa(mesa.MESA)">{{mesa.OBS}}</button>
+                <button type="button" class="btn btn-primary btn-lg badge-pill active" style="height:100px"
+                        ng-click="ctrl.SetMesa(mesa.MESA)">
+                    {{mesa.OBS}}
+                </button>
                 <br />
             </div>
         </div>
     </div>
 </div>
+
 <!--grupos-->
 <div class="container" ng-show="ctrl.VisualizarGrupo && !ctrl.VerResumo">
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
+        <input id="pesquisarGrupo" type="text" class="form-control" name="pesquisarGrupo"
+               ng-model="ctrl.FiltroGrupo" placeholder="Pesquisar">
+    </div>
+    <div class="col-12 col-md-12">
         <div class="row">
-            <div class="col-4 col-lg-4 blockquote" ng-repeat="grupo in $root.currentUser.Grupos">
+            <div class="col-4 col-lg-4 blockquote"
+                 ng-repeat="grupo in $root.currentUser.Grupos| orderBy:'GRUPA60DESCR' |filter:ctrl.FiltroGrupo ">
                 <br />
                 <button type="button" class="btn btn-primary btn-lg active" style="height:100px; width: 150px"
-                         ng-click="ctrl.SetGrupo(grupo)">
+                        ng-click="ctrl.SetGrupo(grupo)">
                     {{grupo.GRUPA60DESCR}}
                 </button>
                 <br />
@@ -94,17 +104,27 @@
 
 <div class="container" ng-show="ctrl.VisualizarProdutos && !ctrl.VerResumo">
 
-    <button type="button" class="btn btn-primary"
-          style="height:50px"  ng-click="ctrl.AbrirGrupo()">Grupos        
-    </button>
+    <div class="col-12 col-md-12">
+        <div class="row">
+            <div class="col-3 col-md-3">
+                <button type="button" class="btn btn-primary"
+                         ng-click="ctrl.AbrirGrupo()">
+                    Mostrar Grupos
+                </button>
+            </div>
+            <div class="col-9 col-md-9" ng-show="ctrl.Produtos.length > 0">
+                <input id="pesquisarProduto" type="text" class="form-control" name="pesquisarProduto"
+                       ng-model="ctrl.FiltroProduto" placeholder="Pesquisar">
+            </div>
+        </div>
+    </div>
 
     <div class="row">
-           
         <!--produtos-->
         <h4 ng-show="ctrl.Produtos.length == 0">Nenhum produto em: {{ctrl.GrupoSelecionado}}</h4>
         <div class="col-12 col-md-9">
             <div class="row">
-                <div class="col-6 col-lg-4" ng-repeat="produto in ctrl.Produtos">
+                <div class="col-6 col-lg-4" ng-repeat="produto in ctrl.Produtos| orderBy:'PRODA60DESCR' |filter:ctrl.FiltroProduto ">
                     <h2>{{produto.PRODA60DESCR}}</h2>
                     <h2>R$: {{produto.PRODN3VLRVENDA | currency:'':2}}</h2>
                     <p>

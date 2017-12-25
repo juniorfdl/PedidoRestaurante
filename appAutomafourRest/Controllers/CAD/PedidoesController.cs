@@ -39,7 +39,9 @@ namespace appAutomafourRest.Controllers.CAD
             }
             
             var id = f.ExecSql("select id from SP_GRAVAR_PEDIDO_WEB(" + dados.id + ", " + dados.CodUsr
-                + ", " + dados.Mesa + ", '" + dados.Total.ToString().Replace(",", ".") + "')");
+                + ", " + dados.Mesa + ", '" + dados.Total.ToString().Replace(",", ".")                
+                + "' , '" + dados.OBS.Trim()    
+                + "')");
 
             if (id != null && id.Count > 0)
             {

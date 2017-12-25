@@ -25,6 +25,7 @@ var App;
                     this.Pedido.Mesa = 0;
                     this.Pedido.Total = 0;
                     this.Pedido.CodUsr = $rootScope.currentUser.CODIGOSISUSUARIO;
+                    this.Pedido.OBS = "";
                 }
 
                 this.IniciarPedido();
@@ -71,6 +72,7 @@ var App;
                                     _this.Pedido.id = dados.id;
                                     _this.Pedido.CodUsr = dados.CodUsr;
                                     _this.Pedido.Total = dados.Total;
+                                    _this.Pedido.OBS = dados.OBS;
                                     _this.VerResumo = true;
                                                                                                             
                                     for (var i = 0; i < dados.Produtos.length; i++)
@@ -171,7 +173,7 @@ var App;
                     _this.VisualizarProdutos = false;
                     _this.VisualizarGrupo = true;
                 }
-                                                
+                                
             }
 
             CrudpedidoCtrl.prototype.crud = function () {

@@ -66,7 +66,7 @@
 
             FuncoesBanco f = new FuncoesBanco(dblocal);
 
-            List<dynamic> dt = f.CollectionFromSql("select first(1) PRVDICOD, VENDICOD, PRVDN2TOTITENS from prevenda where mesaicod = "
+            List<dynamic> dt = f.CollectionFromSql("select first(1) PRVDICOD, VENDICOD, PRVDN2TOTITENS, CLIENTEOBS from prevenda where mesaicod = "
                   + mesa.id + " order by PRVDICOD desc ",
                new Dictionary<string, object> { }).ToList();
 
@@ -75,6 +75,7 @@
                 item.id = Convert.ToInt32(d.PRVDICOD);
                 item.CodUsr = Convert.ToInt32(d.VENDICOD);
                 item.Total = Convert.ToDouble(d.PRVDN2TOTITENS);
+                item.OBS = d.CLIENTEOBS;
 
                 List<dynamic> lista = f.CollectionFromSql(
                     "select a.PRODICOD,a.PVITN3QTD,a.PVITN3VLRUNIT, b.proda60descr, b.grupicod "
@@ -153,6 +154,7 @@
         public int CodUsr { get; set; }
         public int Mesa { get; set; }
         public double Total { get; set; }
+        public string OBS { get; set; }
         public dynamic Produtos { get; set; }
     }
 }
